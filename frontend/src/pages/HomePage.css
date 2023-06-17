@@ -1,0 +1,38 @@
+.wrapper {
+  width: 70%;
+  height: 90%;
+  border-radius: 0.5em;
+  background-color: white;
+  display: flex;
+}
+
+.auth-container,
+.design-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auth-container {
+  flex-direction: column;
+}
+
+.design-container {
+  background-color: rgb(243, 245, 249);
+  position: relative;
+}
+
+.round-design {
+  width: 7em;
+  height: 7em;
+  border-radius: 50%;
+  background-color: rgb(97, 62, 183);
+}
+
+.blur-round-design {
+  height: 50%;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  position: absolute;
+  bottom: 0;
+}
