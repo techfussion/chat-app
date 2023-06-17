@@ -1,25 +1,26 @@
 import express from "express";
 import env from "dotenv";
-import chats from "./data/data.js";
+import connectDB from "./config/db.js";
+import router from "./routes/userRouter.js";
 
 env.config();
 
 const app = express();
+app.use(express.json());
+
 const port = process.env.PORT || 4500;
 
 app.get("/", (req, res) => {
   res.send("Welcome to chat app api! Reference the docs to learn more.");
 });
 
-app.get("/api/chats", (req, res) => {
-  res.send(chats);
-});
+app.use("/api/user", router);
 
-app.get("/api/chats/:id", (req, res) => {
-  const chat = chats.find((key) => key._id === req.params.id);
-  res.send(chat);
-});
-
-app.listen(port, () => {
-  console.log(`App listening on port ${port}...`);
-});
+try {
+  await connectDB();
+  app.listen(port, () => {
+    console.log(`App listening on port ${port}...`);
+  });
+} catch (err) {
+  console.log(`Error: ${err.message}`);
+}
