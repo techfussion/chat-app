@@ -1,4 +1,4 @@
-const notFound = (req, res, next) => {
+const badUrl = (req, res, next) => {
   const error = new Error(`The requested ${req.originalUrl} url not found`);
   res.status(404);
   next(error);
@@ -13,4 +13,4 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-export { notFound, errorHandler };
+export { badUrl, errorHandler };

@@ -2,6 +2,7 @@ import express from "express";
 import env from "dotenv";
 import connectDB from "./config/db.js";
 import router from "./routes/userRouter.js";
+import { badUrl, errorHandler } from "./middleware/errorMiddleware.js";
 
 env.config();
 
@@ -15,6 +16,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", router);
+app.use(badUrl);
+app.use(errorHandler);
 
 try {
   await connectDB();
