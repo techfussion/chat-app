@@ -25,13 +25,36 @@ const registerUser = asycnHandler(async (req, res) => {
   });
 
   if (user) {
-    delete user.password;
-    user.token = generateToken(user._id);
-    res.status(201).json(user);
+    res.status(201).json({
+      _id: user._id,
+      name: user.naem,
+      email: user.email,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
   } else {
     res.status(400);
     throw new Error("Coudn't create user, try again.");
   }
 });
 
-export default registerUser;
+const authUser = asycnHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (user && (await user.matchPassword)) {
+    res.json({
+      _id: user._id,
+      name: user.naem,
+      email: user.email,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid Email or Password");
+  }
+});
+
+export { registerUser, authUser };
